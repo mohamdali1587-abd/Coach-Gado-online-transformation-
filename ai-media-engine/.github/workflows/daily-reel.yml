@@ -1,35 +1,45 @@
 name: Coach Gado Daily Reel
+
 on:
   workflow_dispatch:
   schedule:
     - cron: "0 7 * * *"
+
 permissions:
   contents: read
+
 jobs:
   reel:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
-        with: {python-version: "3.11"}
+        with:
+          python-version: "3.11"
       - name: Install FFmpeg
-        run: sudo apt-get update && sudo apt-get install -y ffmpeg
-      - name: Install Pyton dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+      - name: Install Python dependencies
         run: pip install -r requirements.txt
       - name: Prepare footage
-        env: {CLIPS_BASE64: "${{ secrets.CLIPS_BASE64 }}"}
+        env:
+          CLIPS_BASE64: ${{ secrets.CLIPS_BASE64 }}
         run: |
           mkdir -p assets/clips output data
-          if [ -n "$CLIPS_BASE64" ]; then echo "$CLIPS_BASE64" | base64 -d > /tmp/clips.zip; unzip -o /tmp/clips.zip -d assets/clips; fi
+          if [ -n "$CLIPS_BASE64" ]; then
+            echo "$CLIPS_BASE64" | base64 -d > /tmp/clips.zip
+            unzip -o /tmp/clips.zip -d assets/clips
+          fi
       - name: Generate Reel
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          OPENAI_BASE_URL: ${{ secrets.OPENAI_BASE_URL}}
-          OPENAI_MODEL: ${{ secrets.OPENAI_MODEL}}
+          OPENAI_BASE_URL: ${{ secrets.OPENAI_BASE_URL }}
+          OPENAI_MODEL: ${{ secrets.OPENAI_MODEL }}
           TTS_VOICE: ar-EG-ShakirNeural
           PUBLISH_TO_INSTAGRAM: ${{ secrets.PUBLISH_TO_INSTAGRAM }}
           INSTAGRAM_BUSINESS_ACCOUNT_ID: ${{ secrets.INSTAGRAM_BUSINESS_ACCOUNT_ID }}
-          META_ACCESS_TOKEN: ${{ secrets.METAACCESS_TOKEN }}
+          META_ACCESS_TOKEN: ${{ secrets.META_ACCESS_TOKEN }}
           META_GRAPH_API_VERSION: v23.0
           PUBLIC_VIDEO_BASE_URL: ${{ secrets.PUBLIC_VIDEO_BASE_URL }}
           PUBLIC_VIDEO_DIR: ${{ secrets.PUBLIC_VIDEO_DIR }}
