@@ -1,0 +1,1 @@
+Flask==3.1.1\npython-dotenv==1.1.1\nopenai==1.93.0\nedge-tts==7.2.3\nrequests==2.32.4\n
