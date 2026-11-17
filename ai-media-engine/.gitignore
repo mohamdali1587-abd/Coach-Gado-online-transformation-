@@ -1,1 +1,7 @@
-.env\n.venv/\n__pycache__/\n*.pyc\ndata/*.db\noutput/*\n!output/.gitkeep\n
+.env
+.venv/
+__pycache__/
+*.pyc
+data/*.db
+output/*
+!output/.gitkeep
