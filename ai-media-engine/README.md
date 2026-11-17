@@ -27,7 +27,7 @@ python -m app.main
 ```
 Open http://127.0.0.1:8000.
 
-Keep `PUBLISH_TO_INSTAGRAM=false` until a test Reel is reviewed. Never commit `.env  or tokens.
+Keep `PUBLISH_TO_INSTAGRAM=false` until a test Reel is reviewed. Never commit `.env` or access tokens.
 
 ## GitHub Actions
 The included workflow runs daily at 07:00 UTC (09:00 Cairo in Egypt standard time; adjust seasonally). Add required values as GitHub repository secrets. For clips, provide `CLIPS_BASE64` as a base64 ZIP of licensed source clips. Generated MP4 is uploaded as a workflow artifact.
